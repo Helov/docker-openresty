@@ -1,17 +1,17 @@
 FROM openresty/openresty:buster
 
-MAINTAINER "hello hello@vvaii.com"
+MAINTAINER "Helov"
 
-# replace aliyun mirror
+# option by aliyun mirror
 RUN set -eux; \
-printf 'deb http://mirrors.cloud.aliyuncs.com/debian/ buster main non-free contrib\n\
-deb http://mirrors.cloud.aliyuncs.com/debian-security buster/updates main\n\
-deb http://mirrors.cloud.aliyuncs.com/debian/ buster-updates main non-free contrib\n\
-deb http://mirrors.cloud.aliyuncs.com/debian/ buster-backports main non-free contrib\n\
-deb http://mirrors.aliyun.com/debian/ buster main non-free contrib\n\
-deb http://mirrors.aliyun.com/debian-security buster/updates main\n\
-deb http://mirrors.aliyun.com/debian/ buster-updates main non-free contrib\n\
-deb http://mirrors.aliyun.com/debian/ buster-backports main non-free contrib' > /etc/apt/sources.list; \
+# printf 'deb http://mirrors.cloud.aliyuncs.com/debian/ buster main non-free contrib\n\
+# deb http://mirrors.cloud.aliyuncs.com/debian-security buster/updates main\n\
+# deb http://mirrors.cloud.aliyuncs.com/debian/ buster-updates main non-free contrib\n\
+# deb http://mirrors.cloud.aliyuncs.com/debian/ buster-backports main non-free contrib\n\
+# deb http://mirrors.aliyun.com/debian/ buster main non-free contrib\n\
+# deb http://mirrors.aliyun.com/debian-security buster/updates main\n\
+# deb http://mirrors.aliyun.com/debian/ buster-updates main non-free contrib\n\
+# deb http://mirrors.aliyun.com/debian/ buster-backports main non-free contrib' > /etc/apt/sources.list; \
 apt-get update
 
 # create nginx extended config dir
