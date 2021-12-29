@@ -1,0 +1,50 @@
+name: Build and Deploy to Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+
+env:
+  IMAGE: openresty
+  TAG: ${{ github.ref_name }}
+  USER: helov
+  ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Run tests
+        run: |
+          if [ -f docker-compose.test.yml ]; then
+            docker-compose --file docker-compose.test.yml build
+            docker-compose --file docker-compose.test.yml run sut
+          else
+            docker build . --file Dockerfile
+          fi
+  build:
+    needs: test
+    
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Login to Docker Hub
+      run: echo "$ACCESS_TOKEN" | docker login -u $USER --password-stdin
+ 
+    - name: Build image
+      run: | 
+        docker build . --file Dockerfile --tag $USER/$IMAGE:$TAG
+    
+    - name: Push image
+      run: |
+        docker push $USER/$IMAGE:$TAG
