@@ -6,9 +6,9 @@ on:
       - v*
 
 env:
-  IMAGE: $(echo ${{ github.repository }} | tr '[A-Z]' '[a-z]' | sed -e 's,docker-,,')
+  IMAGE: echo ${{ github.repository }} | tr '[A-Z]' '[a-z]' | sed -e 's,docker-,,'
   TAG: ${{ github.ref_name }}
-  USER: $(echo ${{ github.repository_owner }} | tr '[A-Z]' '[a-z]')
+  USER: echo ${{ github.repository_owner }} | tr '[A-Z]' '[a-z]'
 
 jobs:
   test:
