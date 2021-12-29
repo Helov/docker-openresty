@@ -39,7 +39,11 @@ jobs:
         run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ env.USER }} --password-stdin
  
       - name: Build image
-        run: docker build . --file Dockerfile --tag ${{ env.IMAGE }}:${{ env.TAG }}
+        run: |
+          docker build . --file Dockerfile --tag ${{ env.IMAGE }}:${{ env.TAG }}
+          docker build . --file Dockerfile --tag ${{ env.IMAGE }}:latest
     
       - name: Push image
-        run: docker push ${{ env.IMAGE }}:${{ env.TAG }}
+        run: |
+          docker push ${{ env.IMAGE }}:${{ env.TAG }}
+          docker push ${{ env.IMAGE }}:latest
